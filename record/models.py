@@ -1,7 +1,16 @@
-from xml.parsers.expat import model
 from django.db import models
 
 # Create your models here.
+"""
+USER
+"""
+class User(models.Model):
+    email = models.CharField(max_length=255, unique=True, null=False)
+    first_name = models.CharField(max_length=255, null=True)
+    last_name = models.CharField(max_length=255, null=True)
+    birthdate = models.DateField(null=True)
+    country = models.CharField(max_length=255, null=True)
+
 
 """
 FLIGHT MODEL
@@ -26,6 +35,7 @@ class Flight(models.Model):
     source_name = models.CharField(max_length=100)
     destination_name = models.CharField(max_length=100)
     kg_co2eq = models.FloatField(null=False)
+    user = models.ForeignKey(User, on_delete=models.CASCADE, default=-1)
 
     def __str__(self):
         return self.date + "\n" + self.source_name + "\n" + self.destination_name + "\n" + self.kg_co2eq + "kgCO2eq"
@@ -47,6 +57,7 @@ class Electricity(models.Model):
     value = models.FloatField(null=False)
     units = models.CharField(max_length=10, null=False, choices=E_UNIT_CHOICES)
     kg_co2eq = models.FloatField(null=False)
+    user = models.ForeignKey(User, on_delete=models.CASCADE, default=-1)
 
     def __str__(self):
         return self.date + "\n" + self.value + "\n" + self.units + "\n" + self.kg_co2eq + "kgCO2eq"
@@ -89,6 +100,7 @@ class Fuel(models.Model):
     value = models.FloatField(null=False)
     units = models.CharField(max_length=15, null=False, choices=F_UNIT_CHOICES)
     kg_co2eq = models.FloatField(null=False)
+    user = models.ForeignKey(User, on_delete=models.CASCADE, default=-1)
 
     def __str__(self):
         return self.date + "\n" + self.type + "\n" + self.value + "\n" + self.units + "\n" + self.kg_co2eq + "kgCO2eq"
@@ -110,6 +122,7 @@ class Meal(models.Model):
     meal = models.CharField(max_length=10, null=False, choices=MEAL_CHOICES)
     food_products = models.CharField(max_length=255, null=False)
     kg_co2eq = models.FloatField(null=False)
+    user = models.ForeignKey(User, on_delete=models.CASCADE, default=-1)
 
     def __str__(self):
         return self.date + "\n" + self.meal + "\n" + self.food_products + "\n" + self.kg_co2eq + "kgCO2eq"
@@ -149,6 +162,7 @@ class Transport(models.Model):
     fuel_eff_unit = models.CharField(max_length=10, null=False, choices=FUEL_EFF_UNIT_CHOICES)
     fuel_type = models.CharField(max_length=10, null=False, choices=FUEL_TYPE)
     kg_co2eq = models.FloatField(null=False)
+    user = models.ForeignKey(User, on_delete=models.CASCADE, default=-1)
 
     def __str__(self):
         return self.date + "\n" + self.distance + self.distance_unit + "\n" + self.fuel_efficiency + self.fuel_eff_unit + "\n" + self.fuel_type + "\n" + self.kg_co2eq + "kgCO2eq"
