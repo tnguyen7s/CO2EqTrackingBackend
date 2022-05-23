@@ -6,6 +6,7 @@ from django.contrib.auth.models import User
 CONSUMER MODEL
 """
 class Consumer(models.Model):
+    id = models.BigIntegerField(primary_key=True, null=False, auto_created=False)
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     birthdate = models.DateField(null=True)
     gender = models.CharField(max_length=1, null=True, choices=(('M', 'Male'), ('F', 'Female')))

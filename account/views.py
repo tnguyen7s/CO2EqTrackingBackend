@@ -48,7 +48,7 @@ class AccountViewSet(viewsets.ModelViewSet):
             serializer.save()
 
             # create a consumer record in the consumer table that references the auth.user
-            consumer = Consumer.objects.create(user=serializer.instance)
+            consumer = Consumer.objects.create(user=serializer.instance, id=serializer.instance.id)
             consumer.save()
             
             return generate_auth_response_with_token(serializer.instance)
