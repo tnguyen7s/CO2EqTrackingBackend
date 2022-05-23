@@ -5,14 +5,11 @@ import datetime
 
 from django.conf import settings
 
-from rest_framework import viewsets, status
-from rest_framework.response import Response
-from django.contrib.auth.models import User
-
-# for AccountViewSet
+from account.models import Consumer
 from account.serializers import UserSerializer
 
-# To override the ObtainAuthToken
+from rest_framework import viewsets, status
+from rest_framework.response import Response
 from rest_framework.authtoken.views import ObtainAuthToken
 from rest_framework.authtoken.models import Token
 
@@ -47,7 +44,12 @@ class AccountViewSet(viewsets.ModelViewSet):
         serializer = UserSerializer(data=request.data)
         
         if (serializer.is_valid()):
+            # create auth user
             serializer.save()
+
+            # create a consumer record in the consumer table that references the auth.user
+            consumer = Consumer.objects.create(user=serializer.instance)
+            consumer.save()
             
             return generate_auth_response_with_token(serializer.instance)
         else:
