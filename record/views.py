@@ -23,7 +23,9 @@ class FlightViewSet(viewsets.GenericViewSet):
     queryset = Flight.objects.all()
 
     def list(self, request, date=None):
-        result = self.queryset.filter(date=date)
+        # get the consumer
+        consumer = Consumer.objects.get(pk=request.user.id)
+        result = self.queryset.filter(consumer=consumer).filter(date=date)
         
         if (len(result)==0):
             raise Http404
@@ -40,7 +42,9 @@ class FlightViewSet(viewsets.GenericViewSet):
             return Response(serializer.errors, status=status.HTTP_403_FORBIDDEN)
 
     def destroy_many(self, request, date=None):
-        result = self.queryset.filter(date=date)
+        consumer = Consumer.objects.get(pk=request.user.id)
+        result = self.queryset.filter(consumer=consumer).filter(date=date)
+
         result.delete()
 
         return Response(status=status.HTTP_204_NO_CONTENT)
@@ -59,7 +63,8 @@ class ElectricityViewSet(viewsets.GenericViewSet):
             return Response(serializer.errors, status.HTTP_403_FORBIDDEN)
 
     def retrieve(self, request, date=None):
-        result = self.queryset.filter(date=date)
+        consumer = Consumer.objects.get(pk=request.user.id)
+        result = self.queryset.filter(consumer=consumer).filter(date=date)
 
         if (len(result)==0):
             raise Http404
@@ -72,7 +77,9 @@ class ElectricityViewSet(viewsets.GenericViewSet):
 
 
     def destroy(self, request, date=None):
-        result = self.queryset.filter(date=date)
+        consumer = Consumer.objects.get(pk=request.user.id)
+        result = self.queryset.filter(consumer=consumer).filter(date=date)
+
         result.delete()
 
         return Response(status=status.HTTP_204_NO_CONTENT)
@@ -83,7 +90,8 @@ class FuelViewSet(viewsets.GenericViewSet):
     queryset = Fuel.objects.all()
 
     def list(self, request, date=None):
-        result = self.queryset.filter(date=date)
+        consumer = Consumer.objects.get(pk=request.user.id)
+        result = self.queryset.filter(consumer=consumer).filter(date=date)
 
         if (len(result)==0):
             raise Http404
@@ -100,7 +108,9 @@ class FuelViewSet(viewsets.GenericViewSet):
             return Response(serializer.errors, status.HTTP_403_FORBIDDEN)
 
     def destroy_many(self, request, date=None):
-        result = self.queryset.filter(date=date)
+        consumer = Consumer.objects.get(pk=request.user.id)
+        result = self.queryset.filter(consumer=consumer).filter(date=date)
+
         result.delete()
 
         return Response(status=status.HTTP_204_NO_CONTENT)
@@ -111,7 +121,8 @@ class MealViewSet(viewsets.GenericViewSet):
     queryset = Meal.objects.all()
 
     def list(self, request, date=None):
-        result = self.queryset.filter(date=date)
+        consumer = Consumer.objects.get(pk=request.user.id)
+        result = self.queryset.filter(consumer=consumer).filter(date=date)
 
         if (len(result)==0):
             raise Http404
@@ -128,7 +139,9 @@ class MealViewSet(viewsets.GenericViewSet):
             return Response(serializer.errors, status.HTTP_403_FORBIDDEN)
 
     def destroy_many(self, request, date=None):
-        result = self.queryset.filter(date=date)
+        consumer = Consumer.objects.get(pk=request.user.id)
+        result = self.queryset.filter(consumer=consumer).filter(date=date)
+
         result.delete()
 
         return Response(status=status.HTTP_204_NO_CONTENT)
@@ -148,8 +161,9 @@ class TransportViewSet(viewsets.GenericViewSet):
 
 
     def retrieve(self, request, date=None):
-        result = self.queryset.filter(date=date)
-
+        consumer = Consumer.objects.get(pk=request.user.id)
+        result = self.queryset.filter(consumer=consumer).filter(date=date)
+        
         if (len(result)==0):
             raise Http404
 
@@ -160,7 +174,9 @@ class TransportViewSet(viewsets.GenericViewSet):
         pass
 
     def destroy(self, request, date=None):
-        result = self.queryset.filter(date=date)
+        consumer = Consumer.objects.get(pk=request.user.id)
+        result = self.queryset.filter(consumer=consumer).filter(date=date)
+        
         result.delete()
 
         return Response(status=status.HTTP_204_NO_CONTENT)
