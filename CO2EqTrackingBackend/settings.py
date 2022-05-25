@@ -14,6 +14,7 @@ from pathlib import Path
 from datetime import timedelta
 import os
 import django_heroku
+import dj_database_url
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/4.0/howto/deployment/checklist/
@@ -36,6 +37,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'whitenoise.runserver_nostatic',
     'corsheaders',
     'rest_framework',
     'rest_framework.authtoken',
@@ -81,16 +83,24 @@ WSGI_APPLICATION = 'CO2EqTrackingBackend.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/4.0/ref/settings/#databases
 
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.mysql',
+#         'HOST': 'localhost',
+#         'USER': 'root',
+#         'PASSWORD': 'CMBDVietnam2019',
+#         'PORT': 3306,
+#         'NAME': 'co2eqtrackerdb',
+#     }
+# }
+
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.mysql',
-        'HOST': 'localhost',
-        'USER': 'root',
-        'PASSWORD': 'CMBDVietnam2019',
-        'PORT': 3306,
-        'NAME': 'co2eqtrackerdb',
     }
 }
+
+db_from_env = dj_database_url.config(conn_max_age=600)
+DATABASES['default'].update(db_from_env)
 
 
 # Password validation
