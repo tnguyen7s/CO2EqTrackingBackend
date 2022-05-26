@@ -20,7 +20,8 @@ import dj_database_url
 # See https://docs.djangoproject.com/en/4.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = os.environ.get("SECRET_KEY")
+# SECRET_KEY = os.environ.get("SECRET_KEY")
+SECRET_KEY = "django-insecure-c3&9s6uwwf4@0ke4&yz=2!uytfet4e!2g(c3sleu+8a=l6u8"
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
@@ -47,8 +48,8 @@ INSTALLED_APPS = [
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
-    'whitenoise.middleware.WhiteNoiseMiddleware',
     'corsheaders.middleware.CorsMiddleware',
+    'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -83,12 +84,14 @@ WSGI_APPLICATION = 'CO2EqTrackingBackend.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/4.0/ref/settings/#databases
 
+# used locally
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
         'HOST': 'localhost',
         'USER': 'root',
-        'PASSWORD': os.environ.get("LOCAL_DB_PASSWORD"),
+        # 'PASSWORD': os.environ.get("LOCAL_DB_PASSWORD"),
+        'PASSWORD': "CMBDVietnam2019",
         'PORT': 3306,
         'NAME': 'co2eqtrackerdb',
     }
@@ -160,9 +163,9 @@ TIMED_AUTH_TOKEN = {
 }
 
 # set allowed domains: only for dev
-# CORS_ALLOWED_ORIGINS = [
-#     "http://localhost:4200"
-# ]
+CORS_ALLOWED_ORIGINS = [
+    "*"
+]
 
 # Configure Django App for Heroku.
 django_heroku.settings(locals())
