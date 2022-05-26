@@ -162,9 +162,9 @@ TIMED_AUTH_TOKEN = {
     'DEFAULT_VALIDITY_DURATION':  timedelta(hours=24)
 }
 
-# set allowed domains: only for dev
+# set allowed domains
 CORS_ALLOWED_ORIGINS = [
-    "*"
+    "https://co2eq-tracking-angular-app.herokuapp.com"
 ]
 
 # Configure Django App for Heroku.
