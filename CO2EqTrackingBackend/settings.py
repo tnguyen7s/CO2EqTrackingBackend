@@ -163,9 +163,10 @@ TIMED_AUTH_TOKEN = {
 }
 
 # set allowed domains
-CORS_ALLOWED_ORIGINS = [
-    "https://co2eq-tracking-angular-app.herokuapp.com"
-]
+CORS_ORIGIN_ALLOW_ALL = True
+# CORS_ALLOWED_ORIGINS = [
+#     "https://co2eq-tracking-angular-app.herokuapp.com"
+# ]
 
 # Configure Django App for Heroku.
 django_heroku.settings(locals())
