@@ -21,7 +21,7 @@ import dj_database_url
 
 # SECURITY WARNING: keep the secret key used in production secret!
 # SECRET_KEY = os.environ.get("SECRET_KEY")
-SECRET_KEY = "django-insecure-c3&9s6uwwf4@0ke4&yz=2!uytfet4e!2g(c3sleu+8a=l6u8"
+SECRET_KEY = ""
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
@@ -91,7 +91,7 @@ DATABASES = {
         'HOST': 'localhost',
         'USER': 'root',
         # 'PASSWORD': os.environ.get("LOCAL_DB_PASSWORD"),
-        'PASSWORD': "CMBDVietnam2019",
+        'PASSWORD': "",
         'PORT': 3306,
         'NAME': 'co2eqtrackerdb',
     }
