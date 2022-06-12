@@ -84,21 +84,6 @@ WSGI_APPLICATION = 'CO2EqTrackingBackend.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/4.0/ref/settings/#databases
 
-<<<<<<< HEAD
-=======
-# used locally
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.mysql',
-        'HOST': 'localhost',
-        'USER': 'root',
-        # 'PASSWORD': os.environ.get("LOCAL_DB_PASSWORD"),
-        'PASSWORD': "",
-        'PORT': 3306,
-        'NAME': 'co2eqtrackerdb',
-    }
-}
->>>>>>> f9160f506e94485789fd5e0754c5dba043a28c5c
 
 db_from_env = dj_database_url.config(conn_max_age=600)
 DATABASES['default'].update(db_from_env)
