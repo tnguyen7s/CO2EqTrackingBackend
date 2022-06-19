@@ -17,6 +17,10 @@ from record.serializers import *
 # Create your views here.
 # https://www.django-rest-framework.org/api-guide/viewsets/
 # https://www.django-rest-framework.org/tutorial/6-viewsets-and-routers/
+
+'''
+Flight
+'''
 class FlightViewSet(viewsets.GenericViewSet):
     permission_classes = [permissions.IsAuthenticated]
     serializer_class = FlightSerializer
@@ -49,6 +53,24 @@ class FlightViewSet(viewsets.GenericViewSet):
 
         return Response(status=status.HTTP_204_NO_CONTENT)
 
+class FlightBulkViewSet(viewsets.GenericViewSet):
+    queryset = Flight.objects.all()
+
+    def list(self, request, month=None):
+        consumer = Consumer.objects.get(pk=request.user.id)
+        result = self.queryset.filter(consumer=consumer).filter(month=month)
+
+        if (len(result)==0):
+            raise Http404
+
+        serializer = FlightSerializer(result, many=True)
+        return Response(serializer.data, status=status.HTTP_200_OK)
+
+
+
+'''
+Electricity
+'''
 class ElectricityViewSet(viewsets.GenericViewSet):
     permission_classes = [permissions.IsAuthenticated]
     serializer_class = ElectricitySerializer
@@ -84,6 +106,23 @@ class ElectricityViewSet(viewsets.GenericViewSet):
 
         return Response(status=status.HTTP_204_NO_CONTENT)
 
+
+class ElectricityBulkViewSet(viewsets.GenericViewSet):
+    queryset = Electricity.objects.all()
+
+    def list(self, request, month=None):
+        consumer = Consumer.objects.get(pk=request.user.id)
+        result = self.queryset.filter(consumer=consumer).filter(month=month)
+        
+        if (len(result)==0):
+            raise Http404
+
+        serializer = ElectricitySerializer(result, many=True)
+        return Response(serializer.data, status=status.HTTP_200_OK)
+
+'''
+Fuel
+'''
 class FuelViewSet(viewsets.GenericViewSet):
     permission_classes = [permissions.IsAuthenticated]
     serializer_class = FuelSerializer
@@ -115,6 +154,22 @@ class FuelViewSet(viewsets.GenericViewSet):
 
         return Response(status=status.HTTP_204_NO_CONTENT)
 
+class FuelBulkViewSet(viewsets.GenericViewSet): 
+    queryset = Fuel.objects.all()
+
+    def list(self, request, month=None):
+        consumer = Consumer.objects.get(pk=request.user.id)
+        result = self.queryset.filter(consumer=consumer).filter(month=month)
+        
+        if (len(result)==0):
+            raise Http404
+
+        serializer = FuelSerializer(result, many=True)
+        return Response(serializer.data, status=status.HTTP_200_OK)
+
+'''
+Meal
+'''
 class MealViewSet(viewsets.GenericViewSet):
     permission_classes = [permissions.IsAuthenticated]
     serializer_class = MealSerializer
@@ -146,6 +201,22 @@ class MealViewSet(viewsets.GenericViewSet):
 
         return Response(status=status.HTTP_204_NO_CONTENT)
 
+class MealBulkViewSet(viewsets.GenericViewSet):
+    queryset = Meal.objects.all()
+
+    def list(self, request, month=None):
+        consumer = Consumer.objects.get(pk=request.user.id)
+        result = self.queryset.filter(consumer=consumer).filter(month=month)
+        
+        if (len(result)==0):
+            raise Http404
+
+        serializer = MealSerializer(result, many=True)
+        return Response(serializer.data, status=status.HTTP_200_OK)
+
+'''
+Transport
+'''
 class TransportViewSet(viewsets.GenericViewSet):
     permission_classes = [permissions.IsAuthenticated]
     serializer_class = TransportSerializer
@@ -180,3 +251,16 @@ class TransportViewSet(viewsets.GenericViewSet):
         result.delete()
 
         return Response(status=status.HTTP_204_NO_CONTENT)
+
+class TransportBulkViewSet(viewsets.GenericViewSet):
+        queryset = Transport.objects.all()
+
+        def list(self, request, month=None):
+            consumer = Consumer.objects.get(pk=request.user.id)
+            result = self.queryset.filter(consumer=consumer).filter(month=month)
+
+            if (len(result)==0):
+                raise Http404
+
+            serializer = TransportSerializer(result, many=True)
+            return Response(serializer.data, status=status.HTTP_200_OK)

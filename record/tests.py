@@ -1,5 +1,4 @@
 import json
-from turtle import distance
 from rest_framework.test import APITestCase
 
 from account.models import Consumer
@@ -71,7 +70,8 @@ class FlightViewSetTestCase(APITestCase):
                                                         source_name='Saint Louis International Airport',
                                                         destination_name='Haneda Airport',
                                                         kg_co2eq=1000,
-                                                        consumer=consumer)
+                                                        consumer=consumer, 
+                                                        month=5)
         second_saved_flight =  Flight.objects.create(date=self.date, 
                                                         source_iata='HNA', 
                                                         destination_iata='SGN', 
@@ -79,7 +79,8 @@ class FlightViewSetTestCase(APITestCase):
                                                         source_name='Haneda Airport',
                                                         destination_name='Tan SoN Nhat Airport',
                                                         kg_co2eq=500,
-                                                        consumer=consumer)   
+                                                        consumer=consumer,
+                                                        month=5)   
         return first_saved_flight, second_saved_flight
 
     def test_list_return_list_of_flights_when_path_happy(self):
@@ -106,7 +107,7 @@ class FlightViewSetTestCase(APITestCase):
         self.client.force_authenticate(user=self.user)
 
         # ACt
-        response = self.client.post(self.url, self.flights)
+        response = self.client.post(self.url, self.flights, format="json")
         db_flights = Flight.objects.filter(date=self.date)
         print(response.data)
 
@@ -172,7 +173,8 @@ class ElectricityViewSetTestCase(APITestCase):
                                                         value = 23,
                                                         units = "Wh", 
                                                         kg_co2eq = 0.02,
-                                                        consumer = consumer)
+                                                        consumer = consumer,
+                                                        month=5)
 
         return saved_electricity
 
@@ -273,14 +275,16 @@ class FuelViewSetTestCase(APITestCase):
                                                 value = 10,
                                                 units = "liters", 
                                                 kg_co2eq = 75.37,
-                                                consumer = consumer)
+                                                consumer = consumer, 
+                                                month=5)
 
         second_saved_fuel = Fuel.objects.create(date=self.date,
                                                 type = 'natural_gas',
                                                 value = 10,
                                                 units = "gallons", 
                                                 kg_co2eq = 75.37,
-                                                consumer = consumer)
+                                                consumer = consumer,
+                                                month=5)
 
         return first_saved_fuel, second_saved_fuel
 
@@ -307,7 +311,7 @@ class FuelViewSetTestCase(APITestCase):
         self.client.force_authenticate(user=self.user)
 
         # ACt
-        response = self.client.post(self.url, self.fuels)
+        response = self.client.post(self.url, self.fuels, format="json")
         db_fuels= Fuel.objects.filter(date=self.date).filter(consumer = self.consumer)
         print(response.data)
 
@@ -387,7 +391,8 @@ class MealViewSetTestCase(APITestCase):
                                         meal = "dinner",
                                         food_products = "['Pasta','Beef']",
                                         kg_co2eq = 7.88,
-                                        consumer = consumer)
+                                        consumer = consumer,
+                                        month=5)
 
 
         return saved_meal
@@ -415,7 +420,7 @@ class MealViewSetTestCase(APITestCase):
         self.client.force_authenticate(user=self.user)
 
         # ACt
-        response = self.client.post(self.url, self.meals)
+        response = self.client.post(self.url, self.meals, format="json")
         db_meals= Meal.objects.filter(date=self.date).filter(consumer = self.consumer)
 
         # Assert
@@ -484,7 +489,8 @@ class TransportViewSetTestCase(APITestCase):
                                                     fuel_eff_unit = "mpg",
                                                     fuel_type = "gasoline",
                                                     kg_co2eq = 10.01,
-                                                    consumer = consumer)
+                                                    consumer = consumer, 
+                                                    month=5)
 
         return saved_transport
 

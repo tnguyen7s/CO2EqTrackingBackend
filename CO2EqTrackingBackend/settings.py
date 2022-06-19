@@ -1,3 +1,4 @@
+# PLEASE DON'T COMMIT THIS FILE
 """
 Django settings for CO2EqTrackingBackend project.
 
@@ -21,11 +22,10 @@ import dj_database_url
 
 # SECURITY WARNING: keep the secret key used in production secret!
 # SECRET_KEY = os.environ.get("SECRET_KEY")
-SECRET_KEY = ""
+SECRET_KEY = "django-insecure-c3&9s6uwwf4@0ke4&yz=2!uytfet4e!2g(c3sleu+8a=l6u8"
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
-
 ALLOWED_HOSTS = ["*"]
 
 
@@ -86,6 +86,18 @@ WSGI_APPLICATION = 'CO2EqTrackingBackend.wsgi.application'
 
 
 db_from_env = dj_database_url.config(conn_max_age=600)
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.mysql',
+        'HOST': 'localhost',
+        'USER': 'root',
+        # 'PASSWORD': os.environ.get("LOCAL_DB_PASSWORD"),
+        'PASSWORD': "CMBDVietnam2019",
+        'PORT': 3306,
+        'NAME': 'co2eqtrackerdb',
+    }
+}
+
 DATABASES['default'].update(db_from_env)
 
 

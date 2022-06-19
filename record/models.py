@@ -1,5 +1,6 @@
 from django.db import models
 from account.models import Consumer
+from django.core.validators import MaxValueValidator, MinValueValidator
 
 # Create your models here.
 """
@@ -19,6 +20,7 @@ class Flight(models.Model):
         ('FIRST', 'First')
     )
     date = models.DateField(null=False)
+    month = models.SmallIntegerField(null=False, validators=[MaxValueValidator(12), MinValueValidator(1)], default=1)
     source_iata = models.CharField(max_length=3, null=False)
     destination_iata = models.CharField(max_length=3, null=False)
     cabin_class = models.CharField(max_length=10, null=False, choices=CABIN_CHOICES)
@@ -44,6 +46,7 @@ class Electricity(models.Model):
         ('mWh', 'mWh')
     )
     date = models.DateField(null=False)
+    month = models.SmallIntegerField(null=False, validators=[MaxValueValidator(12), MinValueValidator(1)], default=1)
     value = models.FloatField(null=False)
     units = models.CharField(max_length=10, null=False, choices=E_UNIT_CHOICES)
     kg_co2eq = models.FloatField(null=False)
@@ -86,6 +89,7 @@ class Fuel(models.Model):
     )
 
     date = models.DateField(null=False)
+    month = models.SmallIntegerField(null=False, validators=[MaxValueValidator(12), MinValueValidator(1)], default=1)
     type = models.CharField(max_length=15, null=False, choices=F_CHOICES)
     value = models.FloatField(null=False)
     units = models.CharField(max_length=15, null=False, choices=F_UNIT_CHOICES)
@@ -109,6 +113,7 @@ class Meal(models.Model):
         ("dinner", "dinner")
     )
     date = models.DateField(null=False)
+    month = models.SmallIntegerField(null=False, validators=[MaxValueValidator(12), MinValueValidator(1)], default=1)
     meal = models.CharField(max_length=10, null=False, choices=MEAL_CHOICES)
     food_products = models.CharField(max_length=255, null=False)
     kg_co2eq = models.FloatField(null=False)
@@ -146,6 +151,7 @@ class Transport(models.Model):
     )
 
     date = models.DateField(null=False)
+    month = models.SmallIntegerField(null=False, validators=[MaxValueValidator(12), MinValueValidator(1)], default=1)
     distance =  models.PositiveSmallIntegerField(null=False)
     distance_unit = models.CharField(max_length=10, null=False, choices=DISTANCE_UNIT_CHOICES)
     fuel_efficiency = models.PositiveSmallIntegerField(null=False)
