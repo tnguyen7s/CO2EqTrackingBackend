@@ -15,6 +15,5 @@ class Consumer(models.Model):
     country = models.CharField(max_length=255, null=True)
     city = models.CharField(max_length=255, null=True)
     region = models.CharField(max_length=255, null=True)
-    photo = models.ImageField(null=True, upload_to = user_directory_path)
 
    
