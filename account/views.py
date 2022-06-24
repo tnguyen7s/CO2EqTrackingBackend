@@ -102,30 +102,17 @@ class AccountViewSet(viewsets.ModelViewSet):
 
         return Response(data, status.HTTP_200_OK)
 
-# class ImageAccountViewSet(viewsets.ModelViewSet):
-#     parser_classes = [FileUploadParser]
-#     permission_classes = [IsAuthenticated]
 
-#     # update/image
-#     def update_image(self, request):
-#         print('here')
-#         consumer = Consumer.objects.get(pk=request.user.id)
-#         serializer = ConsumerPhotoSerializer(data=request.data, instance=consumer)
-
-#         if serializer.is_valid():
-#             serializer.save()
-#             return Response('Image is uploaded successfully.', status=status.HTTP_200_OK)
-#         else:
-#             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 class CustomAuthToken(ObtainAuthToken):
-
-    def post(self, request, *args, **kwargs):
+    def post(self, request):
         serializer = self.serializer_class(data=request.data,
                                        context={'request': request})
         if (serializer.is_valid()):
-            user = serializer.request.data['user']
-
-            return generate_auth_response_with_token(user)
+            try:
+                user = serializer.request.data['user']
+                return generate_auth_response_with_token(user)
+            except Exception as e:
+                print(e)
         else:
             return Response(serializer.errors, status.HTTP_401_UNAUTHORIZED)
         

@@ -40,14 +40,5 @@ class UserSerializer(serializers.ModelSerializer):
         user.save()
         return 
         
-# class ConsumerPhotoSerializer(serializers.ModelSerializer):
-#     photo = serializers.ImageField(
-#         max_length=None,
-#         use_url=True
-#     )
-
-#     class Meta:
-#         model = Consumer
-#         fields = ["photo"]
 
         
