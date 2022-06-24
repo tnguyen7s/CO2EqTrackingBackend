@@ -1,8 +1,6 @@
-import pytz
-from datetime import datetime
-
 from django.conf import settings
-
+import pytz
+import datetime
 from account.models import Consumer
 from account.serializers import UserSerializer
 
@@ -105,11 +103,10 @@ class AccountViewSet(viewsets.ModelViewSet):
 
 class CustomAuthToken(ObtainAuthToken):
     def post(self, request):
-        serializer = self.serializer_class(data=request.data,
-                                       context={'request': request})
+        serializer = self.serializer_class(data=request.data, context={'request': request})
         if (serializer.is_valid()):
             try:
-                user = serializer.request.data['user']
+                user = serializer.validated_data['user']
                 return generate_auth_response_with_token(user)
             except Exception as e:
                 print(e)
