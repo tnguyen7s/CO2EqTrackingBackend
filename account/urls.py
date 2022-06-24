@@ -1,4 +1,6 @@
+from django.conf import settings
 from django.urls import path
+
 
 # import AccountViewSet
 from account.views import AccountViewSet, CustomAuthToken
@@ -9,5 +11,6 @@ urlpatterns = [
     path('signup',  
     AccountViewSet.as_view({
         'post': 'create'
-    })) # register sigin handler
+    }),), # register sigin handler
+    path('account', AccountViewSet.as_view({ 'put': 'update', 'get': 'retrieve'}))
 ]

@@ -54,11 +54,12 @@ class FlightViewSet(viewsets.GenericViewSet):
         return Response(status=status.HTTP_204_NO_CONTENT)
 
 class FlightBulkViewSet(viewsets.GenericViewSet):
+    permission_classes = [permissions.IsAuthenticated]
     queryset = Flight.objects.all()
 
     def list(self, request, month=None):
         consumer = Consumer.objects.get(pk=request.user.id)
-        result = self.queryset.filter(consumer=consumer).filter(month=month)
+        result = self.queryset.filter(consumer=consumer).filter(month=int(month))
 
         if (len(result)==0):
             raise Http404
@@ -108,6 +109,7 @@ class ElectricityViewSet(viewsets.GenericViewSet):
 
 
 class ElectricityBulkViewSet(viewsets.GenericViewSet):
+    permission_classes = [permissions.IsAuthenticated]
     queryset = Electricity.objects.all()
 
     def list(self, request, month=None):
@@ -155,6 +157,7 @@ class FuelViewSet(viewsets.GenericViewSet):
         return Response(status=status.HTTP_204_NO_CONTENT)
 
 class FuelBulkViewSet(viewsets.GenericViewSet): 
+    permission_classes = [permissions.IsAuthenticated]
     queryset = Fuel.objects.all()
 
     def list(self, request, month=None):
@@ -202,6 +205,7 @@ class MealViewSet(viewsets.GenericViewSet):
         return Response(status=status.HTTP_204_NO_CONTENT)
 
 class MealBulkViewSet(viewsets.GenericViewSet):
+    permission_classes = [permissions.IsAuthenticated]
     queryset = Meal.objects.all()
 
     def list(self, request, month=None):
@@ -253,6 +257,7 @@ class TransportViewSet(viewsets.GenericViewSet):
         return Response(status=status.HTTP_204_NO_CONTENT)
 
 class TransportBulkViewSet(viewsets.GenericViewSet):
+        permission_classes = [permissions.IsAuthenticated]
         queryset = Transport.objects.all()
 
         def list(self, request, month=None):

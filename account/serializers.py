@@ -1,6 +1,9 @@
+import datetime
 from rest_framework import serializers
 from django.contrib.auth.models import User
 from rest_framework.validators import UniqueValidator
+
+from account.models import Consumer
 
 #################################################### END-OF-IMPORT #################################################
 
@@ -35,4 +38,16 @@ class UserSerializer(serializers.ModelSerializer):
         user.set_password(validated_data['password'])
 
         user.save()
-        return user
+        return 
+        
+# class ConsumerPhotoSerializer(serializers.ModelSerializer):
+#     photo = serializers.ImageField(
+#         max_length=None,
+#         use_url=True
+#     )
+
+#     class Meta:
+#         model = Consumer
+#         fields = ["photo"]
+
+        
