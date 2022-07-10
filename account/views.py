@@ -38,21 +38,25 @@ def generate_auth_response_with_token(user):
 class AccountViewSet(viewsets.ModelViewSet):
     def create(self, request):
         serializer = UserSerializer(data=request.data)
+        print('here1')
 
-        if (serializer.is_valid()):
-            # create auth user
-            serializer.save()
-            print('here2')
+        try:
+            if (serializer.is_valid()):
+                # create auth user
+                serializer.save()
+                print('here2')
 
 
-            # create a consumer record in the consumer table that references the auth.user
-            consumer = Consumer.objects.create(user=serializer.instance, id=serializer.instance.id)
-            consumer.save()
+                # create a consumer record in the consumer table that references the auth.user
+                consumer = Consumer.objects.create(user=serializer.instance, id=serializer.instance.id)
+                consumer.save()
 
-            print('here3')
-            return generate_auth_response_with_token(serializer.instance)
-        else:
-            return Response(serializer.errors, status.HTTP_403_FORBIDDEN)
+                print('here3')
+                return generate_auth_response_with_token(serializer.instance)
+            else:
+                return Response(serializer.errors, status.HTTP_403_FORBIDDEN)
+        except Exception as e:
+            print("Exception", e)
 
 class AccountViewSetUpdate(viewsets.ModelViewSet):
     permission_classes=[IsAuthenticated] 
